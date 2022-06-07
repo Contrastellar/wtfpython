@@ -1,4 +1,4 @@
-<p align="center"><img src="/images/logo.png" alt=""></p>
+<p align="center"><img src="/images/logo.png" alt="Logo of the 'wtfpython' repo - a stick figure is standing next to a drawn computer monitor that has the python logo. On the stick figure's head, is a question mark. the python logo's alt text as taken from the python.org website - 'python™'."></p>
 <h1 align="center">What the f*ck Python! 😱</h1>
 <p align="center">Exploring and understanding Python through surprising snippets.</p>
 
@@ -350,7 +350,7 @@ Makes sense, right?
   * All length 0 and length 1 strings are interned.
   * Strings are interned at compile time (`'wtf'` will be interned but `''.join(['w', 't', 'f'])` will not be interned)
   * Strings that are not composed of ASCII letters, digits or underscores, are not interned. This explains why `'wtf!'` was not interned due to `!`. CPython implementation of this rule can be found [here](https://github.com/python/cpython/blob/3.6/Objects/codeobject.c#L19)
-  ![image](/images/string-intern/string_intern.png)
+  ![A hand-drawn diagram showing the intern behavior. The top of the diagram shows the letter 'a' with an arrow drawn towards a box labeled 'pyStringObject' above a line break and the word "wtf!" in quotation marks. Below this, the letter 'b' with an arrow drawn towards a box labeled 'pyStringObject' above a line break and the word "wtf!" in quotation marks in a similar fashion to the first. Finally, at the bottom of the image, two boxes, one with the letter 'a', one with the letter 'b' have individual arrows pointing at a box box labeled 'pyStringObject' above a line break and the word "wtf!" in quotation marks in a similar fashion to the first and second occurrence.](/images/string-intern/string_intern.png)
 + When `a` and `b` are set to `"wtf!"` in the same line, the Python interpreter creates a new object, then references the second variable at the same time. If you do it on separate lines, it doesn't "know" that there's already `"wtf!"` as an object (because `"wtf!"` is not implicitly interned as per the facts mentioned above). It's a compile-time optimization. This optimization doesn't apply to 3.7.x versions of CPython (check this [issue](https://github.com/satwikkansal/wtfpython/issues/100) for more discussion).
 + A compile unit in an interactive environment like IPython consists of a single statement, whereas it consists of the entire module in case of modules. `a, b = "wtf!", "wtf!"` is single statement, whereas `a = "wtf!"; b = "wtf!"` are two statements in a single line. This explains why the identities are different in `a = "wtf!"; b = "wtf!"`, and also explain why they are same when invoked in `some_file.py`
 + The abrupt change in the output of the fourth snippet is due to a [peephole optimization](https://en.wikipedia.org/wiki/Peephole_optimization) technique known as Constant folding. This means the expression `'a'*20` is replaced by `'aaaaaaaaaaaaaaaaaaaa'` during compilation to save a  few clock cycles during runtime. Constant folding only occurs for strings having a length of less than 21. (Why? Imagine the size of `.pyc` file generated as a result of the expression `'a'*10**10`). [Here's](https://github.com/python/cpython/blob/3.6/Python/peephole.c#L288) the implementation source for the same.
@@ -973,11 +973,11 @@ We didn't assign three `"X"`s, did we?
 
 When we initialize `row` variable, this visualization explains what happens in the memory
 
-![image](/images/tic-tac-toe/after_row_initialized.png)
+![The word 'row' has an arrow pointed at a box that is segmented into three groups. Each group contains two quotation marks, with nothing in the middle.](/images/tic-tac-toe/after_row_initialized.png)
 
 And when the `board` is initialized by multiplying the `row`, this is what happens inside the memory (each of the elements `board[0]`, `board[1]` and `board[2]` is a reference to the same list referred by `row`)
 
-![image](/images/tic-tac-toe/after_board_initialized.png)
+![The word 'row', and the individual elements of the array 'board' (board[0], board[1], board[2]) each have individual arrows pointed at a box that is segmented into three groups. Each group contains two quotation marks, with nothing in the middle.](/images/tic-tac-toe/after_board_initialized.png)
 
 We can avoid this scenario here by not using `row` variable to generate `board`. (Asked in [this](https://github.com/satwikkansal/wtfpython/issues/68) issue).
 
